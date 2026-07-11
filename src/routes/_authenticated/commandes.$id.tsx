@@ -683,7 +683,7 @@ function CommandeDetail() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-[var(--shadow-soft)] h-fit">
+        <Card className="order-[-1] lg:order-none shadow-[var(--shadow-soft)] h-fit">
           <CardHeader><CardTitle className="text-base">Statut</CardTitle></CardHeader>
           <CardContent className="space-y-3">
             <Select value={cmd.status} onValueChange={(v) => changeStatus(v as CommandeStatus)} disabled={cmd.status === "livre" && !isAdmin}>
