@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, MapPin, Package, Phone, Truck } from "lucide-react";
 import { toast } from "sonner";
 import { STATUS_COLORS, STATUS_LABELS, type CommandeStatus } from "@/lib/commande-status";
+import { setCommandeStatus } from "@/lib/commande-status-update";
 
 export const Route = createFileRoute("/_authenticated/livraison")({
   head: () => ({ meta: [{ title: "Livraison — ShapeAndPrint CRM" }] }),
@@ -43,7 +44,7 @@ function LivraisonPage() {
   }, []);
 
   const setStatus = async (id: string, status: CommandeStatus) => {
-    const { error } = await supabase.from("commandes").update({ status }).eq("id", id);
+    const { error } = await setCommandeStatus(id, status);
     if (error) toast.error(error.message);
     else toast.success(STATUS_LABELS[status]);
   };
