@@ -60,12 +60,6 @@ const GROUP_ACCENT: Record<CommandeStatus, { bar: string; dot: string; tint: str
   ramasse_livreur: { bar: "bg-zinc-300",    dot: "bg-zinc-300",    tint: "from-zinc-300/10" },
   livre:           { bar: "bg-emerald-500", dot: "bg-emerald-500", tint: "from-emerald-500/10" },
 };
-  prete:           { bar: "bg-yellow-400",  dot: "bg-yellow-400",  tint: "from-yellow-400/10" },
-  a_livrer:        { bar: "bg-zinc-400",    dot: "bg-zinc-400",    tint: "from-zinc-400/10" },
-  livre_societe:   { bar: "bg-zinc-400",    dot: "bg-zinc-400",    tint: "from-zinc-400/10" },
-  ramasse_livreur: { bar: "bg-zinc-300",    dot: "bg-zinc-300",    tint: "from-zinc-300/10" },
-  livre:           { bar: "bg-emerald-500", dot: "bg-emerald-500", tint: "from-emerald-500/10" },
-};
 
 function CommandesList() {
   const { hasAnyRole, hasRole } = useAuth();
