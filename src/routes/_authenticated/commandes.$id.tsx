@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import {
   STATUS_LABELS, STATUS_COLORS, STATUS_ORDER, type CommandeStatus,
 } from "@/lib/commande-status";
+import { setCommandeStatus } from "@/lib/commande-status-update";
 import { useServerFn } from "@tanstack/react-start";
 import {
   generateDevis, generateBL, generateFacture, appendDtfFromCommande,
@@ -212,7 +213,7 @@ function CommandeDetail() {
   useEffect(() => { void load(); }, [id]);
 
   const changeStatus = async (newStatus: CommandeStatus) => {
-    const { error } = await supabase.from("commandes").update({ status: newStatus }).eq("id", id);
+    const { error } = await setCommandeStatus(id, newStatus);
     if (error) { toast.error("Échec : " + error.message); return; }
     toast.success("Statut mis à jour");
     void load();

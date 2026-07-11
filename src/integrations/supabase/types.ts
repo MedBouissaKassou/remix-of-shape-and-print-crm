@@ -833,6 +833,10 @@ export type Database = {
         Args: { _online_at: string; _user_id: string }
         Returns: undefined
       }
+      set_commande_status: {
+        Args: { _commande_id: string; _status: string }
+        Returns: Database["public"]["Enums"]["commande_status"]
+      }
       update_user_credentials: {
         Args: {
           new_password: string

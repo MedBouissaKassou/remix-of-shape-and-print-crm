@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import {
   STATUS_LABELS, STATUS_COLORS, STATUS_ORDER, type CommandeStatus,
 } from "@/lib/commande-status";
+import { setCommandeStatus } from "@/lib/commande-status-update";
 import { ROLE_LABELS, type AppRole } from "@/hooks/use-auth";
 
 type Row = {
@@ -70,7 +71,7 @@ function CommandesList() {
   const markPrete = async (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     e.stopPropagation();
-    const { error } = await supabase.from("commandes").update({ status: "prete" }).eq("id", id);
+    const { error } = await setCommandeStatus(id, "prete");
     if (error) { toast.error("Échec : " + error.message); return; }
     toast.success("Commande marquée Prête");
     setRows((prev) => prev.map((r) => (r.id === id ? { ...r, status: "prete" } : r)));
