@@ -504,7 +504,7 @@ function CommandeDetail() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
-        <Card className="lg:col-span-2 shadow-[var(--shadow-soft)]">
+        <Card className="order-first lg:order-none lg:col-span-2 shadow-[var(--shadow-soft)]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-base">Produits ({items.length})</CardTitle>
             {canEditCmd && (
