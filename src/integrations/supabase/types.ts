@@ -862,6 +862,9 @@ export type Database = {
         | "ramasse_livreur"
         | "livre_societe"
         | "livre"
+        | "en_echantillonage"
+        | "confirme"
+        | "en_dtf"
       contact_origin:
         | "facebook"
         | "instagram"
@@ -1017,6 +1020,9 @@ export const Constants = {
         "ramasse_livreur",
         "livre_societe",
         "livre",
+        "en_echantillonage",
+        "confirme",
+        "en_dtf",
       ],
       contact_origin: [
         "facebook",
