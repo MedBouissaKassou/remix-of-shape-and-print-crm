@@ -41,15 +41,19 @@ export const Route = createFileRoute("/_authenticated/commandes/")({
 });
 
 const GROUP_ORDER: CommandeStatus[] = [
-  "non_traite", "en_conception", "en_production", "impression", "prete",
-  "a_livrer", "livre_societe", "ramasse_livreur", "livre",
+  "non_traite", "en_conception", "en_echantillonage", "confirme", "impression",
+  "en_dtf", "en_production", "prete", "a_livrer", "livre_societe",
+  "ramasse_livreur", "livre",
 ];
 
 const GROUP_ACCENT: Record<CommandeStatus, { bar: string; dot: string; tint: string }> = {
   non_traite:      { bar: "bg-red-500",     dot: "bg-red-500",     tint: "from-red-500/10" },
   en_conception:   { bar: "bg-purple-500",  dot: "bg-purple-500",  tint: "from-purple-500/10" },
-  en_production:   { bar: "bg-sky-400",     dot: "bg-sky-400",     tint: "from-sky-400/10" },
+  en_echantillonage:{ bar: "bg-fuchsia-500", dot: "bg-fuchsia-500", tint: "from-fuchsia-500/10" },
+  confirme:        { bar: "bg-teal-500",    dot: "bg-teal-500",    tint: "from-teal-500/10" },
   impression:      { bar: "bg-blue-500",    dot: "bg-blue-500",    tint: "from-blue-500/10" },
+  en_dtf:          { bar: "bg-indigo-500",  dot: "bg-indigo-500",  tint: "from-indigo-500/10" },
+  en_production:   { bar: "bg-sky-400",     dot: "bg-sky-400",     tint: "from-sky-400/10" },
   prete:           { bar: "bg-yellow-400",  dot: "bg-yellow-400",  tint: "from-yellow-400/10" },
   a_livrer:        { bar: "bg-zinc-400",    dot: "bg-zinc-400",    tint: "from-zinc-400/10" },
   livre_societe:   { bar: "bg-zinc-400",    dot: "bg-zinc-400",    tint: "from-zinc-400/10" },

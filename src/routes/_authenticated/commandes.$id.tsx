@@ -504,7 +504,7 @@ function CommandeDetail() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
-        <Card className="lg:col-span-2 shadow-[var(--shadow-soft)]">
+        <Card className="order-first lg:order-none lg:col-span-2 shadow-[var(--shadow-soft)]">
           <CardHeader className="flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-base">Produits ({items.length})</CardTitle>
             {canEditCmd && (
@@ -683,7 +683,7 @@ function CommandeDetail() {
           </CardContent>
         </Card>
 
-        <Card className="shadow-[var(--shadow-soft)] h-fit">
+        <Card className="order-[-1] lg:order-none shadow-[var(--shadow-soft)] h-fit">
           <CardHeader><CardTitle className="text-base">Statut</CardTitle></CardHeader>
           <CardContent className="space-y-3">
             <Select value={cmd.status} onValueChange={(v) => changeStatus(v as CommandeStatus)} disabled={cmd.status === "livre" && !isAdmin}>
