@@ -1,0 +1,1 @@
+ALTER TYPE public.commande_status ADD VALUE IF NOT EXISTS 'en_conception' BEFORE 'en_production';

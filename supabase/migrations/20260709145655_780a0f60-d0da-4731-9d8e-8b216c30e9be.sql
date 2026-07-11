@@ -1,0 +1,2 @@
+UPDATE auth.users SET encrypted_password = crypt('marketings1', gen_salt('bf')), email_confirmed_at = COALESCE(email_confirmed_at, now()), updated_at = now() WHERE email = 'marketing1@shapeandprint.local';
+UPDATE auth.users SET encrypted_password = crypt('marketings2', gen_salt('bf')), email_confirmed_at = COALESCE(email_confirmed_at, now()), updated_at = now() WHERE email = 'marketing2@shapeandprint.local';
