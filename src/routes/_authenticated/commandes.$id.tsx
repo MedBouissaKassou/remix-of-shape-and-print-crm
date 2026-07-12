@@ -684,7 +684,7 @@ function CommandeDetail() {
           </CardContent>
         </Card>
 
-        <Card className="order-[-1] sticky top-0 z-40 -mx-4 rounded-none border-x-0 bg-card/95 shadow-[var(--shadow-soft)] backdrop-blur supports-[backdrop-filter]:bg-card/85 sm:top-3 sm:mx-0 sm:rounded-lg sm:border-x lg:order-none lg:top-4 lg:h-fit">
+        <Card className="order-[-1] sticky top-14 z-20 -mx-4 rounded-none border-x-0 bg-card/95 shadow-[var(--shadow-soft)] backdrop-blur supports-[backdrop-filter]:bg-card/85 sm:top-16 sm:mx-0 sm:rounded-lg sm:border-x lg:order-none lg:top-20 lg:h-fit">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Statut</CardTitle>
             <div className="grid grid-cols-2 gap-x-3 gap-y-1 pt-1 text-xs text-muted-foreground">
