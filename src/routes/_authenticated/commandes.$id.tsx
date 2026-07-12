@@ -684,8 +684,28 @@ function CommandeDetail() {
           </CardContent>
         </Card>
 
-        <Card className="order-[-1] lg:order-none shadow-[var(--shadow-soft)] h-fit">
-          <CardHeader><CardTitle className="text-base">Statut</CardTitle></CardHeader>
+        <Card className="order-[-1] sticky top-14 z-20 -mx-4 rounded-none border-x-0 bg-card/95 shadow-[var(--shadow-soft)] backdrop-blur supports-[backdrop-filter]:bg-card/85 sm:top-16 sm:mx-0 sm:rounded-lg sm:border-x lg:order-none lg:top-20 lg:h-fit">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Statut</CardTitle>
+            <div className="grid grid-cols-2 gap-x-3 gap-y-1 pt-1 text-xs text-muted-foreground">
+              <div>
+                <span className="block font-mono text-[10px] uppercase text-muted-foreground">Commande</span>
+                <span className="font-semibold text-foreground">{cmd.number}</span>
+              </div>
+              <div>
+                <span className="block font-mono text-[10px] uppercase text-muted-foreground">Client</span>
+                <span className="line-clamp-1 font-semibold text-foreground">{cmd.clients?.full_name ?? "—"}</span>
+              </div>
+              <div>
+                <span className="block font-mono text-[10px] uppercase text-muted-foreground">Créée</span>
+                <span>{new Date(cmd.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "short" })}</span>
+              </div>
+              <div>
+                <span className="block font-mono text-[10px] uppercase text-muted-foreground">Total</span>
+                <span>{aggregated.ttc.toFixed(3)} DT</span>
+              </div>
+            </div>
+          </CardHeader>
           <CardContent className="space-y-3">
             <Select value={cmd.status} onValueChange={(v) => changeStatus(v as CommandeStatus)} disabled={cmd.status === "livre" && !isAdmin}>
               <SelectTrigger><SelectValue /></SelectTrigger>

@@ -27,7 +27,7 @@ export const STATUS_LABELS: Record<CommandeStatus, string> = {
   en_production: "En production",
   prete: "Prêt",
   a_livrer: "A livrer",
-  livre_societe: "A livrer avec société",
+  livre_societe: "A livrer Avec société",
   ramasse_livreur: "Ramassé par livreur",
   livre: "Livré",
 };
