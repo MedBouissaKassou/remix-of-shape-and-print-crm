@@ -520,6 +520,16 @@ function CommandeDetail() {
             )}
           </span>
         )}
+        {lastModifier && (
+          <span className="inline-flex items-center gap-1">
+            <Pencil className="h-3.5 w-3.5" />
+            Dernière modification : <span className="text-foreground font-medium">{lastModifier.name}</span>
+            {lastModifier.roles.length > 0 && (
+              <span className="font-mono opacity-70">· {lastModifier.roles.map((r) => ROLE_LABELS[r]).join(", ")}</span>
+            )}
+            <span className="opacity-70">· {new Date(lastModifier.at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}</span>
+          </span>
+        )}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
