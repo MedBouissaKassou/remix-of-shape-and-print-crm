@@ -31,6 +31,8 @@ type Row = {
   priority: "normal" | "urgent" | null;
   deadline: string | null;
   clients: { full_name: string; company_name: string | null; phone: string | null; phone2: string | null; address: string | null; city: string | null; client_type: string | null; brand_name: string | null; contact_origin: string | null; contact_origin_other: string | null } | null;
+  updated_at: string | null;
+  updated_by: string | null;
   order_types: { name: string } | null;
 };
 
