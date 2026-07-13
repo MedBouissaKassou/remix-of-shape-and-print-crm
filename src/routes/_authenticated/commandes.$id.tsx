@@ -84,6 +84,7 @@ function CommandeDetail() {
   const [orderTypes, setOrderTypes] = useState<OrderType[]>([]);
   const [items, setItems] = useState<ItemRow[]>([]);
   const [creator, setCreator] = useState<{ name: string; roles: AppRole[] } | null>(null);
+  const [lastModifier, setLastModifier] = useState<{ name: string; roles: AppRole[]; at: string } | null>(null);
   const [savingItemId, setSavingItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
