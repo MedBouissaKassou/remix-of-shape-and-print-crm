@@ -78,6 +78,7 @@ function CommandesList() {
   };
   const [rows, setRows] = useState<Row[]>([]);
   const [creators, setCreators] = useState<Record<string, Creator>>({});
+  const [lastModifiers, setLastModifiers] = useState<Record<string, { userId: string; at: string }>>({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [dateFilter, setDateFilter] = useState<string>("");
@@ -93,7 +94,26 @@ function CommandesList() {
     const list = (data as unknown as Row[]) ?? [];
     setRows(list);
 
-    const ids = Array.from(new Set(list.map((r) => r.created_by).filter((x): x is string => !!x)));
+    // Last modification per commande from status_history
+    const commandeIds = list.map((r) => r.id);
+    const lastMap: Record<string, { userId: string; at: string }> = {};
+    if (commandeIds.length) {
+      const { data: hist } = await supabase
+        .from("status_history")
+        .select("commande_id, created_by, created_at")
+        .in("commande_id", commandeIds)
+        .order("created_at", { ascending: false });
+      for (const h of (hist ?? []) as Array<{ commande_id: string; created_by: string | null; created_at: string }>) {
+        if (!h.created_by) continue;
+        if (!lastMap[h.commande_id]) lastMap[h.commande_id] = { userId: h.created_by, at: h.created_at };
+      }
+    }
+    setLastModifiers(lastMap);
+
+    const ids = Array.from(new Set([
+      ...list.map((r) => r.created_by).filter((x): x is string => !!x),
+      ...Object.values(lastMap).map((v) => v.userId),
+    ]));
     if (ids.length) {
       const [{ data: profs }, { data: urs }] = await Promise.all([
         supabase.from("profiles").select("id, full_name, email").in("id", ids),
@@ -365,6 +385,24 @@ function CommandesList() {
                                 {c.roles.length > 0 && (
                                   <span className="font-mono opacity-70 truncate">
                                     · {c.roles.map((rr) => ROLE_LABELS[rr]).join(", ")}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })()}
+
+                          {(() => {
+                            const lm = lastModifiers[r.id];
+                            if (!lm) return null;
+                            const u = creators[lm.userId];
+                            if (!u) return null;
+                            return (
+                              <div className="mt-1 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                                <span className="opacity-70">Dernière modification :</span>
+                                <span className="text-foreground font-medium truncate">{u.name}</span>
+                                {u.roles.length > 0 && (
+                                  <span className="font-mono opacity-70 truncate">
+                                    · {u.roles.map((rr) => ROLE_LABELS[rr]).join(", ")}
                                   </span>
                                 )}
                               </div>
