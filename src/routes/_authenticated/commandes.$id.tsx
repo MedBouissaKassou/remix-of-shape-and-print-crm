@@ -211,18 +211,18 @@ function CommandeDetail() {
       setCreator(null);
     }
 
-    const histRows = (h as Hist[]) ?? [];
-    const lastHist = histRows.find((x) => !!x.created_by);
-    if (lastHist?.created_by) {
+    const lastUserId = commandeRow?.updated_by ?? null;
+    const lastAt = commandeRow?.updated_at ?? null;
+    if (lastUserId && lastAt) {
       const [{ data: lp }, { data: lurs }] = await Promise.all([
-        supabase.from("profiles").select("full_name, email").eq("id", lastHist.created_by).maybeSingle(),
-        supabase.from("user_roles").select("role").eq("user_id", lastHist.created_by),
+        supabase.from("profiles").select("full_name, email").eq("id", lastUserId).maybeSingle(),
+        supabase.from("user_roles").select("role").eq("user_id", lastUserId),
       ]);
       const lpr = lp as { full_name: string | null; email: string | null } | null;
       setLastModifier({
         name: lpr?.full_name || lpr?.email?.split("@")[0] || "—",
         roles: ((lurs ?? []) as Array<{ role: AppRole }>).map((r) => r.role),
-        at: lastHist.created_at,
+        at: lastAt,
       });
     } else {
       setLastModifier(null);
