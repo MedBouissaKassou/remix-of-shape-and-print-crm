@@ -16,5 +16,6 @@ export async function setCommandeStatus(commandeId: string, status: CommandeStat
     .update({ status })
     .eq("id", commandeId)
     .select("id, status")
-    .single();
+        .single();
+
 }
