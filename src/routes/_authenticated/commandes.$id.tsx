@@ -58,7 +58,7 @@ type Cmd = {
 type ItemRow = NonNullable<Cmd["commande_items"]>[number];
 type OrderType = { id: string; name: string };
 type CmdFile = { id: string; file_name: string; storage_path: string; mime_type: string | null; size_bytes: number | null; commande_item_id: string | null };
-type Hist = { id: string; from_status: CommandeStatus | null; to_status: CommandeStatus; created_at: string };
+type Hist = { id: string; from_status: CommandeStatus | null; to_status: CommandeStatus; created_at: string; created_by: string | null };
 
 const REMINDER_TARGETS: { value: AppRole | "all"; label: string }[] = [
   { value: "all", label: "Tout le monde" },
