@@ -833,10 +833,6 @@ export type Database = {
         Args: { _online_at: string; _user_id: string }
         Returns: undefined
       }
-      set_commande_status: {
-        Args: { _commande_id: string; _status: string }
-        Returns: Database["public"]["Enums"]["commande_status"]
-      }
       update_user_credentials: {
         Args: {
           new_password: string
@@ -859,16 +855,16 @@ export type Database = {
       commande_status:
         | "non_traite"
         | "en_conception"
-        | "en_production"
-        | "impression"
-        | "prete"
-        | "a_livrer"
-        | "ramasse_livreur"
-        | "livre_societe"
-        | "livre"
         | "en_echantillonage"
         | "confirme"
+        | "impression"
         | "en_dtf"
+        | "en_production"
+        | "prete"
+        | "a_livrer"
+        | "livre_societe"
+        | "ramasse_livreur"
+        | "livre"
       contact_origin:
         | "facebook"
         | "instagram"
@@ -1017,16 +1013,16 @@ export const Constants = {
       commande_status: [
         "non_traite",
         "en_conception",
-        "en_production",
-        "impression",
-        "prete",
-        "a_livrer",
-        "ramasse_livreur",
-        "livre_societe",
-        "livre",
         "en_echantillonage",
         "confirme",
+        "impression",
         "en_dtf",
+        "en_production",
+        "prete",
+        "a_livrer",
+        "livre_societe",
+        "ramasse_livreur",
+        "livre",
       ],
       contact_origin: [
         "facebook",
