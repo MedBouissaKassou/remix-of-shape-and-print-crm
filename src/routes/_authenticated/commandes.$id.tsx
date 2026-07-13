@@ -42,6 +42,7 @@ type Cmd = {
   color: string | null; size_label: string | null; unit_price: number | null;
   total_price: number | null; tva_rate: number | null; tva_amount: number | null;
   comment: string | null; created_at: string; created_by: string | null;
+  updated_at: string | null; updated_by: string | null;
   priority: "normal" | "urgent" | null; deadline: string | null;
   avance: number | null; paid: boolean | null;
   discount_rate: number | null;
