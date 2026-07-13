@@ -183,7 +183,7 @@ function CommandeDetail() {
     const [{ data: c }, { data: fs }, { data: h }, { data: ot }] = await Promise.all([
       supabase.from("commandes").select("*, clients(full_name, phone, phone2, company_name, address, city, governorate, client_type, brand_name, contact_origin, contact_origin_other), order_types(name), commande_items(*, order_types(name))").eq("id", id).maybeSingle(),
       supabase.from("commande_files").select("*").eq("commande_id", id).order("created_at", { ascending: false }),
-      supabase.from("status_history").select("id, from_status, to_status, created_at").eq("commande_id", id).order("created_at", { ascending: false }),
+      supabase.from("status_history").select("id, from_status, to_status, created_at, created_by").eq("commande_id", id).order("created_at", { ascending: false }),
       supabase.from("order_types").select("id, name").eq("active", true).order("name"),
     ]);
     const commandeRow = c as any;
