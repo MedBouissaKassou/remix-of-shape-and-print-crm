@@ -58,7 +58,7 @@ type Cmd = {
 type ItemRow = NonNullable<Cmd["commande_items"]>[number];
 type OrderType = { id: string; name: string };
 type CmdFile = { id: string; file_name: string; storage_path: string; mime_type: string | null; size_bytes: number | null; commande_item_id: string | null };
-type Hist = { id: string; from_status: CommandeStatus | null; to_status: CommandeStatus; created_at: string };
+type Hist = { id: string; from_status: CommandeStatus | null; to_status: CommandeStatus; created_at: string; created_by: string | null };
 
 const REMINDER_TARGETS: { value: AppRole | "all"; label: string }[] = [
   { value: "all", label: "Tout le monde" },
@@ -84,6 +84,7 @@ function CommandeDetail() {
   const [orderTypes, setOrderTypes] = useState<OrderType[]>([]);
   const [items, setItems] = useState<ItemRow[]>([]);
   const [creator, setCreator] = useState<{ name: string; roles: AppRole[] } | null>(null);
+  const [lastModifier, setLastModifier] = useState<{ name: string; roles: AppRole[]; at: string } | null>(null);
   const [savingItemId, setSavingItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -182,7 +183,7 @@ function CommandeDetail() {
     const [{ data: c }, { data: fs }, { data: h }, { data: ot }] = await Promise.all([
       supabase.from("commandes").select("*, clients(full_name, phone, phone2, company_name, address, city, governorate, client_type, brand_name, contact_origin, contact_origin_other), order_types(name), commande_items(*, order_types(name))").eq("id", id).maybeSingle(),
       supabase.from("commande_files").select("*").eq("commande_id", id).order("created_at", { ascending: false }),
-      supabase.from("status_history").select("id, from_status, to_status, created_at").eq("commande_id", id).order("created_at", { ascending: false }),
+      supabase.from("status_history").select("id, from_status, to_status, created_at, created_by").eq("commande_id", id).order("created_at", { ascending: false }),
       supabase.from("order_types").select("id, name").eq("active", true).order("name"),
     ]);
     const commandeRow = c as any;
@@ -207,6 +208,23 @@ function CommandeDetail() {
       });
     } else {
       setCreator(null);
+    }
+
+    const histRows = (h as Hist[]) ?? [];
+    const lastHist = histRows.find((x) => !!x.created_by);
+    if (lastHist?.created_by) {
+      const [{ data: lp }, { data: lurs }] = await Promise.all([
+        supabase.from("profiles").select("full_name, email").eq("id", lastHist.created_by).maybeSingle(),
+        supabase.from("user_roles").select("role").eq("user_id", lastHist.created_by),
+      ]);
+      const lpr = lp as { full_name: string | null; email: string | null } | null;
+      setLastModifier({
+        name: lpr?.full_name || lpr?.email?.split("@")[0] || "—",
+        roles: ((lurs ?? []) as Array<{ role: AppRole }>).map((r) => r.role),
+        at: lastHist.created_at,
+      });
+    } else {
+      setLastModifier(null);
     }
     setLoading(false);
   };
@@ -500,6 +518,16 @@ function CommandeDetail() {
             {creator.roles.length > 0 && (
               <span className="font-mono opacity-70">· {creator.roles.map((r) => ROLE_LABELS[r]).join(", ")}</span>
             )}
+          </span>
+        )}
+        {lastModifier && (
+          <span className="inline-flex items-center gap-1">
+            <Pencil className="h-3.5 w-3.5" />
+            Dernière modification : <span className="text-foreground font-medium">{lastModifier.name}</span>
+            {lastModifier.roles.length > 0 && (
+              <span className="font-mono opacity-70">· {lastModifier.roles.map((r) => ROLE_LABELS[r]).join(", ")}</span>
+            )}
+            <span className="opacity-70">· {new Date(lastModifier.at).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}</span>
           </span>
         )}
       </div>
