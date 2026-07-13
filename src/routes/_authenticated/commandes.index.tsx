@@ -391,6 +391,24 @@ function CommandesList() {
                             );
                           })()}
 
+                          {(() => {
+                            const lm = lastModifiers[r.id];
+                            if (!lm) return null;
+                            const u = creators[lm.userId];
+                            if (!u) return null;
+                            return (
+                              <div className="mt-1 flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                                <span className="opacity-70">Dernière modification :</span>
+                                <span className="text-foreground font-medium truncate">{u.name}</span>
+                                {u.roles.length > 0 && (
+                                  <span className="font-mono opacity-70 truncate">
+                                    · {u.roles.map((rr) => ROLE_LABELS[rr]).join(", ")}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })()}
+
                           {r.priority === "urgent" && r.deadline && (
                             <div className="mt-2 rounded-md bg-destructive/10 px-2 py-1 text-[11px] text-destructive">
                               Limite : {new Date(r.deadline).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}
