@@ -1,0 +1,1 @@
+ALTER TABLE public.bons_livraison ADD COLUMN IF NOT EXISTS discount_rate NUMERIC NOT NULL DEFAULT 0;
