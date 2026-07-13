@@ -1,0 +1,14 @@
+# Netlify deployment config for TanStack Start (via Nitro).
+# Nitro auto-detects Netlify (NETLIFY=true env is set by Netlify's build image)
+# and emits the server function + static assets in the right layout.
+
+[build]
+  command = "vite build"
+  publish = "dist"
+
+# Node version for the build image
+[build.environment]
+  NODE_VERSION = "20"
+
+# Nitro's Netlify preset writes _redirects into `dist/`, so SPA/SSR routing
+# is handled automatically. No extra [[redirects]] block needed.
