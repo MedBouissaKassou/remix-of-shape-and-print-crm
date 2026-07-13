@@ -31,6 +31,8 @@ type Row = {
   priority: "normal" | "urgent" | null;
   deadline: string | null;
   clients: { full_name: string; company_name: string | null; phone: string | null; phone2: string | null; address: string | null; city: string | null; client_type: string | null; brand_name: string | null; contact_origin: string | null; contact_origin_other: string | null } | null;
+  updated_at: string | null;
+  updated_by: string | null;
   order_types: { name: string } | null;
 };
 
@@ -88,24 +90,17 @@ function CommandesList() {
     setLoading(true);
     const { data, error } = await supabase
       .from("commandes")
-      .select("id, number, status, description, quantity, total_price, created_at, created_by, client_id, priority, deadline, clients(full_name, company_name, phone, phone2, address, city, client_type, brand_name, contact_origin, contact_origin_other), order_types(name)")
+      .select("id, number, status, description, quantity, total_price, created_at, created_by, updated_at, updated_by, client_id, priority, deadline, clients(full_name, company_name, phone, phone2, address, city, client_type, brand_name, contact_origin, contact_origin_other), order_types(name)")
       .order("created_at", { ascending: false });
     if (error) toast.error("Échec : " + error.message);
     const list = (data as unknown as Row[]) ?? [];
     setRows(list);
 
-    // Last modification per commande from status_history
-    const commandeIds = list.map((r) => r.id);
+    // Last modification per commande from commandes.updated_by/updated_at
     const lastMap: Record<string, { userId: string; at: string }> = {};
-    if (commandeIds.length) {
-      const { data: hist } = await supabase
-        .from("status_history")
-        .select("commande_id, created_by, created_at")
-        .in("commande_id", commandeIds)
-        .order("created_at", { ascending: false });
-      for (const h of (hist ?? []) as Array<{ commande_id: string; created_by: string | null; created_at: string }>) {
-        if (!h.created_by) continue;
-        if (!lastMap[h.commande_id]) lastMap[h.commande_id] = { userId: h.created_by, at: h.created_at };
+    for (const r of list) {
+      if (r.updated_by && r.updated_at) {
+        lastMap[r.id] = { userId: r.updated_by, at: r.updated_at };
       }
     }
     setLastModifiers(lastMap);
