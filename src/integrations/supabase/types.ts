@@ -356,6 +356,7 @@ export type Database = {
           tva_rate: number | null
           unit_price: number | null
           updated_at: string
+          updated_by: string | null
           width_cm: number | null
         }
         Insert: {
@@ -383,6 +384,7 @@ export type Database = {
           tva_rate?: number | null
           unit_price?: number | null
           updated_at?: string
+          updated_by?: string | null
           width_cm?: number | null
         }
         Update: {
@@ -410,6 +412,7 @@ export type Database = {
           tva_rate?: number | null
           unit_price?: number | null
           updated_at?: string
+          updated_by?: string | null
           width_cm?: number | null
         }
         Relationships: [
