@@ -1,14 +1,30 @@
 # Netlify deployment config for TanStack Start (via Nitro).
-# Nitro auto-detects Netlify (NETLIFY=true env is set by Netlify's build image)
+# Nitro auto-detects Netlify (NETLIFY=true is set by Netlify's build image)
 # and emits the server function + static assets in the right layout.
 
 [build]
   command = "vite build"
   publish = "dist"
 
-# Node version for the build image
+# All env vars needed by the build + runtime are declared here so you
+# don't have to add anything in the Netlify dashboard.
+#
+# Only PUBLISHABLE / anon keys are committed here — they are safe to expose
+# (same keys already shipped to the browser via VITE_* in the current app).
+# Never put SUPABASE_SERVICE_ROLE_KEY or LOVABLE_API_KEY in this file: those
+# are secrets and MUST be added via Netlify dashboard → Site settings →
+# Environment variables (only needed if a server function actually uses them).
 [build.environment]
   NODE_VERSION = "20"
 
+  # Supabase — client bundle (Vite replaces at build time)
+  VITE_SUPABASE_URL = "https://vgpzusrduvjerqpnnewo.supabase.co"
+  VITE_SUPABASE_PROJECT_ID = "vgpzusrduvjerqpnnewo"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZncHp1c3JkdXZqZXJxcG5uZXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NjAwMDYsImV4cCI6MjA5OTMzNjAwNn0.8ufUe6pL39xQ06m_nDexGFgmJxb9y3kAXAgDz2Tw8iY"
+
+  # Supabase — server functions (auth middleware, SSR)
+  SUPABASE_URL = "https://vgpzusrduvjerqpnnewo.supabase.co"
+  SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZncHp1c3JkdXZqZXJxcG5uZXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NjAwMDYsImV4cCI6MjA5OTMzNjAwNn0.8ufUe6pL39xQ06m_nDexGFgmJxb9y3kAXAgDz2Tw8iY"
+
 # Nitro's Netlify preset writes _redirects into `dist/`, so SPA/SSR routing
-# is handled automatically. No extra [[redirects]] block needed.
+# is handled automatically — no [[redirects]] block needed.
