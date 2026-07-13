@@ -78,6 +78,7 @@ function CommandesList() {
   };
   const [rows, setRows] = useState<Row[]>([]);
   const [creators, setCreators] = useState<Record<string, Creator>>({});
+  const [lastModifiers, setLastModifiers] = useState<Record<string, { userId: string; at: string }>>({});
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [dateFilter, setDateFilter] = useState<string>("");
@@ -93,7 +94,26 @@ function CommandesList() {
     const list = (data as unknown as Row[]) ?? [];
     setRows(list);
 
-    const ids = Array.from(new Set(list.map((r) => r.created_by).filter((x): x is string => !!x)));
+    // Last modification per commande from status_history
+    const commandeIds = list.map((r) => r.id);
+    const lastMap: Record<string, { userId: string; at: string }> = {};
+    if (commandeIds.length) {
+      const { data: hist } = await supabase
+        .from("status_history")
+        .select("commande_id, created_by, created_at")
+        .in("commande_id", commandeIds)
+        .order("created_at", { ascending: false });
+      for (const h of (hist ?? []) as Array<{ commande_id: string; created_by: string | null; created_at: string }>) {
+        if (!h.created_by) continue;
+        if (!lastMap[h.commande_id]) lastMap[h.commande_id] = { userId: h.created_by, at: h.created_at };
+      }
+    }
+    setLastModifiers(lastMap);
+
+    const ids = Array.from(new Set([
+      ...list.map((r) => r.created_by).filter((x): x is string => !!x),
+      ...Object.values(lastMap).map((v) => v.userId),
+    ]));
     if (ids.length) {
       const [{ data: profs }, { data: urs }] = await Promise.all([
         supabase.from("profiles").select("id, full_name, email").in("id", ids),
