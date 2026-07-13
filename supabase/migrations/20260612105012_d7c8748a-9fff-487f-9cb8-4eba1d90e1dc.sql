@@ -1,1 +1,0 @@
-CREATE POLICY "Users update their own connections" ON public.user_connections FOR UPDATE TO authenticated USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);

@@ -1,1 +1,0 @@
-ALTER TABLE public.devis ALTER COLUMN commande_id DROP NOT NULL;

@@ -1,3 +1,0 @@
-CREATE POLICY "clients_delete_dtf" ON public.clients FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'dtf'::app_role));
-CREATE POLICY "commandes_delete_dtf" ON public.commandes FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'dtf'::app_role));
-CREATE POLICY "commande_items_delete_dtf" ON public.commande_items FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'dtf'::app_role));
