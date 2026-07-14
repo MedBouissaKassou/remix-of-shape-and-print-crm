@@ -1,5 +1,17 @@
 import "./lib/error-capture";
 
+// Provide a WebSocket implementation on Node.js runtimes without native WS
+// (supabase-js Realtime constructor throws on Node < 22 otherwise).
+if (typeof (globalThis as { WebSocket?: unknown }).WebSocket === "undefined") {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const ws = require("ws");
+    (globalThis as { WebSocket?: unknown }).WebSocket = ws.WebSocket ?? ws;
+  } catch {
+    // ignore — Cloudflare Workers already have a native WebSocket
+  }
+}
+
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
 
