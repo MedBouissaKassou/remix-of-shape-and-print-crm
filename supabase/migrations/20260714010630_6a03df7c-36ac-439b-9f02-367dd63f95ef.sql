@@ -1,0 +1,15 @@
+DELETE FROM public.notifications;
+DELETE FROM public.status_history;
+DELETE FROM public.reminders;
+DELETE FROM public.tickets;
+DELETE FROM public.incoming_funds;
+DELETE FROM public.bons_livraison;
+DELETE FROM public.factures;
+DELETE FROM public.devis;
+DELETE FROM public.commande_files;
+DELETE FROM public.commande_items;
+DELETE FROM public.commandes;
+DELETE FROM public.client_dtf_files;
+DELETE FROM public.client_files;
+DELETE FROM public.clients;
+DELETE FROM public.order_types;
