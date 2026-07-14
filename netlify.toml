@@ -5,9 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
-  VITE_SUPABASE_URL = "https://dsghuaczdcugaeuzioof.supabase.co"
-  VITE_SUPABASE_PROJECT_ID = "dsghuaczdcugaeuzioof"
-  VITE_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzZ2h1YWN6ZGN1Z2FldXppb29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MzQ2OTQsImV4cCI6MjA5NDExMDY5NH0.3_b6IoI4OK1NYr3S6m9MqHpQH_3_53hKD9w5JSo7nnI"
+  # Supabase — client bundle (Vite replaces at build time)
+  VITE_SUPABASE_URL = "https://vgpzusrduvjerqpnnewo.supabase.co"
+  VITE_SUPABASE_PROJECT_ID = "vgpzusrduvjerqpnnewo"
+  VITE_SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZncHp1c3JkdXZqZXJxcG5uZXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NjAwMDYsImV4cCI6MjA5OTMzNjAwNn0.8ufUe6pL39xQ06m_nDexGFgmJxb9y3kAXAgDz2Tw8iY"
 
-  SUPABASE_URL = "https://dsghuaczdcugaeuzioof.supabase.co"
-  SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzZ2h1YWN6ZGN1Z2FldXppb29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MzQ2OTQsImV4cCI6MjA5NDExMDY5NH0.3_b6IoI4OK1NYr3S6m9MqHpQH_3_53hKD9w5JSo7nnI"
+  # Supabase — server functions (auth middleware, SSR)
+  SUPABASE_URL = "https://vgpzusrduvjerqpnnewo.supabase.co"
+  SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZncHp1c3JkdXZqZXJxcG5uZXdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NjAwMDYsImV4cCI6MjA5OTMzNjAwNn0.8ufUe6pL39xQ06m_nDexGFgmJxb9y3kAXAgDz2Tw8iY"
+
